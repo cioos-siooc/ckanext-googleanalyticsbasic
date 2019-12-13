@@ -4,6 +4,7 @@
   {{ super() }}
   {% block googleanalyticsbasic_header %}
     {{ h.googleanalyticsbasic_header() }}
+    {% snippet "snippets/googleanalyticsbasic_header.html" %}
   {% endblock %}
 {% endblock %}
 

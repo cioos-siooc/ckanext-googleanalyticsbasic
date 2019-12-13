@@ -31,8 +31,7 @@ class GoogleAnalyticsBasicPlugin(p.SingletonPlugin):
 
         self.googleanalytics_ids = config['googleanalytics.ids'].split()
 
-        self.googleanalytics_javascript_url = h.url_for_static(
-                    '/scripts/ckanext-googleanalytics.js')
+        self.googleanalytics_javascript_url = h.url_for_static('/scripts/ckanext-googleanalytics.js')
 
     def update_config(self, config):
         '''Change the CKAN (Pylons) environment configuration.
@@ -50,22 +49,7 @@ class GoogleAnalyticsBasicPlugin(p.SingletonPlugin):
         See ITemplateHelpers.
 
         '''
-        return {'googleanalyticsbasic_header': self.googleanalyticsbasic_header}
+        return {'get_googleanalyticsbasic_ids': self.get_googleanalyticsbasic_ids}
 
-    def googleanalyticsbasic_header(self):
-        '''Render the googleanalytics_header snippet for CKAN 2.0 templates.
-
-        This is a template helper function that renders the
-        googleanalytics_header jinja snippet. To be called from the jinja
-        templates in this extension, see ITemplateHelpers.
-
-        Using enumerate() to implement multiple trackers support
-        https://developers.google.com/analytics/devguides/collection/analyticsjs/advanced#multipletrackers
-
-        '''
-        data = {
-            'googleanalytics_ids': enumerate(self.googleanalytics_ids, start=1)
-        }
-
-        return p.toolkit.render_snippet(
-            'snippets/googleanalyticsbasic_header.html', data)
+    def get_googleanalyticsbasic_ids(self):
+        return self.googleanalytics_ids
