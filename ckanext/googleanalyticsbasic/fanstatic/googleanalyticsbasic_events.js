@@ -11,24 +11,16 @@ ckan.module('googleanalyticsbasic_events', function ($, _) {
             var baseURI = window.location.host;
 
             var send_outbound_event = function (href) {
-                ga_trackers.forEach(function (tracker) {
-                    ga(tracker + '.send', {
-                        'hitType': 'event',
-                        'eventCategory': 'outbound',
-                        'eventAction': 'link',
-                        'eventLabel': href
-                    });
-                });
+              gtag('event','link',{
+                'event_category': 'outbound',
+                'event_label': href
+              });
             };
             var send_resource_download_event = function (org) {
-                ga_trackers.forEach(function (tracker) {
-                    ga(tracker + '.send', {
-                        'hitType': 'event',
-                        'eventCategory': 'Resource',
-                        'eventAction': 'Download',
-                        'eventLabel': org
-                    });
-                });
+              gtag('event','download',{
+                'event_category': 'resource',
+                'event_label': org
+              });
             };
 
             // click event on body
