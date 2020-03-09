@@ -27,7 +27,7 @@ ckan.module('googleanalyticsbasic_events', function ($, _) {
             $("body").on("click", function (e) {
 
                 // abandon if link already aborted or analytics is not available
-                if (e.isDefaultPrevented() || typeof ga !== "function") return;
+                if (e.isDefaultPrevented() || typeof gtag !== "function") return;
 
                 // abandon if no active link or link within domain
                 var link = $(e.target).closest("a");
@@ -36,6 +36,7 @@ ckan.module('googleanalyticsbasic_events', function ($, _) {
                 // cancel event and record outbound link
                 //e.preventDefault();
                 var href = link[0].href;
+
 
                 send_outbound_event(href);
 
@@ -61,13 +62,15 @@ ckan.module('googleanalyticsbasic_events', function ($, _) {
                 //}
             });
 
-
-            //$('a.resource-url-analytics').on('click', function () {
-            //    var resource_url = encodeURIComponent($(this).prop('href'));
-            //    if (resource_url) {
-            //        ga('send', 'event', 'Resource', 'Download', resource_url);
-            //    }
-            //});
+            $('a.resource-url-analytics').on('click', function () {
+               var resource_url = encodeURIComponent($(this).prop('href'));
+               if (resource_url) {
+                 gtag('event','go_to_resource',{
+                   'event_category': 'resource',
+                   'event_label': resource_url
+                 });
+               }
+            });
         }
     }
 });
